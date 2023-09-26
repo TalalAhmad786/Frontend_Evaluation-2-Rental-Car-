@@ -117,14 +117,13 @@ const selectedYear = ref("");
 const startYear = ref(1990);
 const endYear = ref(new Date().getFullYear());
 const cars = ref({
-  userId: store.state.user.user.user._id,
+  userId: store.state.user.user.user.user._id,
   name: "",
   model: "",
   color: "",
   year: "",
 });
 
-const getUsers = computed(() => store.getters.getUsers);
 const yearList = computed(() => {
   const years = [];
   for (let i = endYear.value; i >= startYear.value; i--) {
@@ -134,6 +133,6 @@ const yearList = computed(() => {
 });
 const create = () => {
   console.log(cars.value.userId);
-  console.log(store.dispatch("createCar", cars.value));
+  console.log(store.dispatch("car/createCar", cars.value));
 };
 </script>

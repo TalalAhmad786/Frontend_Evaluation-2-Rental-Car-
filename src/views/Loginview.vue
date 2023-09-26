@@ -173,7 +173,7 @@ const toggleForm = () => {
 
 const login = async () => {
   console.log("Logging in with:", loginData.value);
-  const success = await store.dispatch("loginUser", loginData.value);
+  const success = await store.dispatch("user/loginUser", loginData.value);
   console.log(success);
   if (success) {
     window.alert("Login successful!");
@@ -198,7 +198,7 @@ const login = async () => {
 
 const signup = () => {
   console.log("Signing up with:", signupData.value);
-  const success = store.dispatch("registerUser", signupData.value);
+  const success = store.dispatch("user/registerUser", signupData.value);
   if (success) {
     toast.success("Congratulations You are Signed Up!", {
       position: "top-right",

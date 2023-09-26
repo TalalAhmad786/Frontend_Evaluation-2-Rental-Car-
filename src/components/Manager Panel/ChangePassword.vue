@@ -72,7 +72,7 @@ const submitForm = async () => {
         password: formData.value.confirmPassword,
       };
       console.log(obj);
-      const success = await store.dispatch("updatePassword", obj);
+      const success = await store.dispatch("user/updatePassword", obj);
       if (success === true) {
         alert("Password Updated Successfully!");
       }

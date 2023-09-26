@@ -65,7 +65,7 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const userId = ref(store.state.user.user.user._id);
-const allReservations = computed(() => store.getters.getAllReservations);
+const allReservations = computed(() => store.getters['reservation/getAllReservations']);
 
 const groupedReservations = computed(() => {
   const grouped = {};
@@ -80,7 +80,7 @@ const groupedReservations = computed(() => {
 });
 
 const fetchReservations = () => {
-  store.dispatch("fetchAllReservations");
+  store.dispatch("reservation/fetchAllReservations");
 };
 
 const cancelReservation = async (reservationId, carId) => {
@@ -88,8 +88,8 @@ const cancelReservation = async (reservationId, carId) => {
   const availaibility = { id: carId, availaibility: "availaible" };
   console.log("Cancelled reservation with ID:", reservationId);
   console.log(availaibility);
-  await store.dispatch("deleteReservation", deleteRes);
-  await store.dispatch("updateAvailaibilty", { payload: availaibility });
+  await store.dispatch("reservation/deleteReservation", deleteRes);
+  await store.dispatch("car/updateAvailaibilty", { payload: availaibility });
 };
 
 onMounted(() => {

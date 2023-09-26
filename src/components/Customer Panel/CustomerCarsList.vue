@@ -143,7 +143,7 @@ const CarList = ref({
   color: '',
   year: '',
 });
-const getAllCars = computed(() => store.getters.getAllCars);
+const getAllCars = computed(() => store.getters['car/getAllCars']);
 
 const reservationDetails = ref({
   time: '',
@@ -155,7 +155,7 @@ const obj = ref(null);
 
 onMounted(() => {
 //  console.log("userid",reservationDetails.value.userId.user._id);
-  store.dispatch('fetchAllCars');
+  store.dispatch('car/fetchAllCars');
 });
 
 const inPopup = (carid, index) => {
@@ -176,8 +176,8 @@ const bookCar = async () => {
     user_name: reservationDetails.value.userId.user.name,
   };
   const avaialaibility = { id: objid.value, availaibility: 'unavailable' };
-  await store.dispatch( 'createReservation',{ idx: obj.value, payload: details });
-  await store.dispatch('updateAvailaibilty',{ payload: avaialaibility });
+  await store.dispatch( 'reservation/createReservation',{ idx: obj.value, payload: details });
+  await store.dispatch('car/updateAvailaibilty',{ payload: avaialaibility });
 
   
     toast.info("Reservation Added",{

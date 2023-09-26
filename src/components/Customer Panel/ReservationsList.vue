@@ -91,11 +91,11 @@ const store = useStore();
 
 const userId = JSON.parse(localStorage.getItem("lbUser"));
 
-const getReservations = computed(() => store.getters.getReservations);
+const getReservations = computed(() => store.getters['reservation/getReservations']);
 
-onMounted(() => {
+onMounted(async () => {
   console.log("User id in reser", userId.user._id);
-  store.dispatch("fetchReservations", { id: userId.user._id });
+   await store.dispatch("reservation/fetchReservations", { id: userId.user._id });
 });
 
 const cancelReservation = async (reservationId, carId) => {
@@ -103,8 +103,8 @@ const cancelReservation = async (reservationId, carId) => {
   const availaibility = { id: carId, availaibility: "availaible" };
   console.log("Cancelled reservation with ID:", reservationId);
   console.log(availaibility);
-  await store.dispatch("deleteReservation", deleteRes);
-  await store.dispatch("updateAvailaibilty", { payload: availaibility });
+  await store.dispatch("reservation/deleteReservation", deleteRes);
+  await store.dispatch("car/updateAvailaibilty", { payload: availaibility });
 
   toast.clear("Reservation Deleted", {
     position: "top-right",

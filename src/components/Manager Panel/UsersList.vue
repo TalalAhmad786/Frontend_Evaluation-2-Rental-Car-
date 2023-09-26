@@ -111,10 +111,10 @@ const updatedUser = ref({
 const obj = ref(null);
 
 onMounted(() => {
-  store.dispatch("fetchUsers");
+  store.dispatch("user/fetchUsers");
 });
 
-const getUsers = computed(() => store.getters.getUsers);
+const getUsers = computed(() => store.getters['user/getUsers']);
 
 const inPopup = (id, index) => {
   obj.value = { id, index };
@@ -124,7 +124,7 @@ const inPopup = (id, index) => {
 };
 
 const editUser = async () => {
-  await store.dispatch("updateUser", {
+  await store.dispatch("user/updateUser", {
     idx: obj.value,
     updatedUser: updatedUser.value,
   });
@@ -136,7 +136,7 @@ const removeUser = async (userId, role) => {
   const userRole = { role: role };
   console.log(authUser.user.role);
 
-  await store.dispatch("deleteUser", { payload: delObj, role: userRole });
+  await store.dispatch("user/deleteUser", { payload: delObj, role: userRole });
   if (authUser.user.role === "manager") {
     localStorage.removeItem("lbUser");
     router.push("/");

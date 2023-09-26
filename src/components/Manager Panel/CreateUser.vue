@@ -80,7 +80,7 @@ const user = ref({
 });
 
 const addUser = async () => {
-  const success = await store.dispatch("registerUser", user.value);
+  const success = await store.dispatch("user/registerUser", user.value);
   if (success) {
     alert("User Added");
   }

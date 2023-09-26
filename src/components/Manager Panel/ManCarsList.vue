@@ -122,14 +122,14 @@ const updatedCarList = ref({
   year: "",
 });
 const obj = ref(null);
-const userId = store.state.user.user.user._id;
+const userId = store.state.user.user.user.user._id;
 
 onMounted(async () => {
   console.log(userId);
-  await store.dispatch("fetchCars", { id: userId });
+  await store.dispatch("car/fetchCars", { id: userId });
 });
 
-const getCars = computed(() => store.getters.getCars);
+const getCars = computed(() => store.getters['car/getCars']);
 
 const inPopup = (id, index) => {
   console.log("car id in popup", id);
@@ -142,7 +142,7 @@ const inPopup = (id, index) => {
 };
 
 const editCar = () => {
-  store.dispatch("updateCars", {
+  store.dispatch("car/updateCars", {
     idx: obj.value,
     updatedCar: updatedCarList.value,
   });
@@ -152,6 +152,6 @@ const editCar = () => {
 const deleteCar = (carId) => {
   const obj = { id: carId };
   console.log(obj);
-  store.dispatch("deleteCars", obj);
+  store.dispatch("car/deleteCars", obj);
 };
 </script>
