@@ -39,6 +39,7 @@ export default {
           "http://localhost:3001/users/register",
           payload
         );
+        console.log("User",data);
       } catch (e) {}
     },
     async loginUser({ commit }, payload) {

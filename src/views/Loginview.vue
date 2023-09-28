@@ -23,6 +23,7 @@
             <div v-if="isLogin">
               <h2 class="text-2xl font-semibold mb-4">Login</h2>
               <form @submit.prevent="login" class="space-y-4">
+                
                 <div class="relative">
                   <input
                     v-model="loginData.email"
@@ -62,6 +63,7 @@
                     Sign In
                   </button>
                 </div>
+                
               </form>
               <p class="mt-4 text-sm text-center text-gray-600">
                 Don't have an account?
@@ -76,6 +78,7 @@
             <div v-else>
               <h2 class="text-2xl font-semibold mb-4">Sign Up</h2>
               <form @submit.prevent="signup" class="space-y-4">
+                
                 <div class="relative">
                   <input
                     type="text"
@@ -154,6 +157,7 @@ import { useToast } from "vue-toastification";
 
 const toast = useToast();
 const isLogin = ref(true);
+
 const loginData = ref({
   email: "",
   password: "",
@@ -162,6 +166,7 @@ const signupData = ref({
   name: "",
   email: "",
   password: "",
+  profilePhoto: ""
 });
 
 const store = useStore();

@@ -10,7 +10,7 @@ import Reservations from "../components/Customer Panel/ReservationsList.vue";
 import Customer from "../components/Customer Panel/Customer.vue";
 import AdminRes from "../components/Manager Panel/AdminReservations.vue";
 import Manager from "../components/Manager Panel/Manager.vue";
-
+//import Modal from "../components/Modal.vue";
 const routes = [
   {
     path: "/",

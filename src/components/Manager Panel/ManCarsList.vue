@@ -33,7 +33,7 @@
                       Edit
                     </button>
                     <button
-                      @click="deleteCar(car.id)"
+                      @click="openDeleteConfirmationModal(car.id)"
                       class="px-4 py-2 text-red-600 hover:text-red-800"
                     >
                       Delete
@@ -87,7 +87,7 @@
                   <div class="flex justify-end">
                     <button
                       class="mr-2 flex bg-red bg-red-600 text-neutral-100 rounded-full p-3 hover:bg-red-800"
-                      @click="editCar"
+                      @click="showUpdateConfirmation= true;"
                     >
                       Update
                     </button>
@@ -105,12 +105,33 @@
         </div>
       </div>
     </div>
+
+    <confirmation-modal
+    :show="showDeleteConfirmation"
+    title="Delete Car"
+    message="Are you sure you want to delete this car?"
+    :confirmCallback="deleteCar"
+    :closeModal="closeDeleteConfirmationModal"
+  ></confirmation-modal>
+  <!-- Update Confirmation Modal -->
+  <confirmation-modal
+    :show="showUpdateConfirmation"
+    title="Update User"
+    message="Do you really want to save these changes?"
+    :confirmCallback="editCar"
+    :closeModal="closeUpdateConfirmation"
+  ></confirmation-modal>
   </div>
 </template>
 
 <script setup>
+import ConfirmationModal from "./Modal.vue";
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
+
+const showDeleteConfirmation = ref(false);
+const showUpdateConfirmation = ref(false);
+const carIdToDelete = ref(null);
 
 const store = useStore();
 
@@ -148,9 +169,22 @@ const editCar = () => {
   });
   showUpdate.value = false;
 };
+const openDeleteConfirmationModal = (carId) => {
+  console.log("Car id",carId);
+  carIdToDelete.value = carId;
+  showDeleteConfirmation.value = true;
+};
+const closeDeleteConfirmationModal = () => {
+  showDeleteConfirmation.value = false;
+};
+const closeUpdateConfirmation=()=>{
+  showUpdateConfirmation.value= false;
+  //showUpdate.value=false;
+}
 
-const deleteCar = (carId) => {
-  const obj = { id: carId };
+const deleteCar = () => {
+  console.log("Car id",carIdToDelete.value);
+  const obj = { id: carIdToDelete.value };
   console.log(obj);
   store.dispatch("car/deleteCars", obj);
 };

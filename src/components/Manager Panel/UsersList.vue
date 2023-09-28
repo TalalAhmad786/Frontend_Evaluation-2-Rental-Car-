@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12"
-  >
+  <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
     <div class="grid place-items-center">
       <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="p-6">
@@ -33,7 +31,7 @@
                       Edit
                     </button>
                     <button
-                      @click="removeUser(user.id, user.role)"
+                      @click="openDeleteConfirmationModal(user.id, user.role)"
                       class="px-4 py-2 text-red-600 hover:text-red-800"
                     >
                       Delete
@@ -75,13 +73,13 @@
                   <div class="flex justify-end">
                     <button
                       class="mr-2 flex bg-red bg-red-600 text-neutral-100 rounded-full p-3 hover:bg-red-800"
-                      @click="editUser"
+                      @click="showUpdateConfirmation= true"
                     >
                       Update
                     </button>
                     <button
                       class="flex bg-red bg-red-600 text-neutral-100 rounded-full p-3 hover:bg-red-800"
-                      @click="showUpdate = false"
+                      @click="showUpdate=false"
                     >
                       Close
                     </button>
@@ -93,13 +91,32 @@
         </div>
       </div>
     </div>
-  </div>
+  
+
+  <!-- Delete Confirmation Modal -->
+  <confirmation-modal
+    :show="showDeleteConfirmation"
+    title="Delete User"
+    message="Are you sure you want to delete this user?"
+    :confirmCallback="deleteUser"
+    :closeModal="closeDeleteConfirmationModal"
+  ></confirmation-modal>
+  <!-- Update Confirmation Modal -->
+  <confirmation-modal
+    :show="showUpdateConfirmation"
+    title="Update User"
+    message="Do you really want to save these changes?"
+    :confirmCallback="editUser"
+    :closeModal="closeUpdateConfirmation"
+  ></confirmation-modal>
+</div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import ConfirmationModal from "./Modal.vue"; 
 const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
 const store = useStore();
 const router = useRouter();
@@ -109,6 +126,10 @@ const updatedUser = ref({
   email: "",
 });
 const obj = ref(null);
+const showDeleteConfirmation = ref(false);
+const showUpdateConfirmation = ref(false);
+const userIdToDelete = ref(null);
+const userRoleToDelete = ref(null);
 
 onMounted(() => {
   store.dispatch("user/fetchUsers");
@@ -131,21 +152,28 @@ const editUser = async () => {
   showUpdate.value = false;
 };
 
-const removeUser = async (userId, role) => {
-  const delObj = { id: userId };
-  const userRole = { role: role };
-  console.log(authUser.user.role);
+const openDeleteConfirmationModal = (userId, role) => {
+  userIdToDelete.value = userId;
+  userRoleToDelete.value = role;
+  showDeleteConfirmation.value = true;
+};
+const closeUpdateConfirmation=()=>{
+  showUpdateConfirmation.value= false;
+  //showUpdate.value=false;
+}
+const closeDeleteConfirmationModal = () => {
+  showDeleteConfirmation.value = false;
+};
+
+const deleteUser = async () => {
+  const delObj = { id: userIdToDelete.value };
+  const userRole = { role: userRoleToDelete.value };
 
   await store.dispatch("user/deleteUser", { payload: delObj, role: userRole });
-  if (authUser.user.role === "manager") {
-    localStorage.removeItem("lbUser");
-    router.push("/");
-  }
+  closeDeleteConfirmationModal();
 };
 
 const changePassword = (userId) => {
-  console.log(userId);
-
   router.push(`admin/editUser/cp/${userId}`);
 };
 </script>

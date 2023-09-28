@@ -68,8 +68,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
-
+const toast = useToast();
 const store = useStore();
 
 const user = ref({
@@ -81,8 +82,25 @@ const user = ref({
 
 const addUser = async () => {
   const success = await store.dispatch("user/registerUser", user.value);
-  if (success) {
+ 
+    
     alert("User Added");
+    if(user.value.role=== 'user'){
+    toast.success("User Added", {
+      position: "top-right",
+      hideProgressBar: true,
+      closeButton: "button",
+      timeout: 3000,
+    });
   }
+  else{
+    toast.success("Manager Added", {
+      position: "top-right",
+      hideProgressBar: true,
+      closeButton: "button",
+      timeout: 3000,
+    });
+  }
+  
 };
 </script>
