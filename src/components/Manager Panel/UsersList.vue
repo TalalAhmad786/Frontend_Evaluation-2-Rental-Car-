@@ -23,6 +23,12 @@
                     <p class="text-lg font-semibold">{{ user.email }}</p>
                     <p class="text-sm text-gray-600">{{ user.role }}</p>
                   </div>
+
+
+
+
+
+
                   <div class="p-4 flex justify-end">
                     <button
                       @click="inPopup(user.id, index)"

@@ -109,8 +109,9 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
-
+const toast = useToast();
 const store = useStore();
 
 const selectedYear = ref("");
@@ -133,6 +134,20 @@ const yearList = computed(() => {
 });
 const create = () => {
   console.log(cars.value.userId);
-  console.log(store.dispatch("car/createCar", cars.value));
+  const success = store.dispatch("car/createCar", cars.value);
+  if (success) {
+    console.log("Car added");
+    cars.value.name = "";
+    cars.value.model = "";
+    cars.value.color = "";
+    cars.value.year = "";
+
+    toast.info("Car Added", {
+      position: "top-right",
+      hideProgressBar: true,
+      closeButton: "button",
+      timeout: 3000,
+    });
+  }
 };
 </script>

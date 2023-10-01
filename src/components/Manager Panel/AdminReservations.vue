@@ -84,7 +84,7 @@ const fetchReservations = () => {
 };
 
 const cancelReservation = async (reservationId, carId) => {
-  const deleteRes = { id: reservationId };
+  const deleteRes = { id: reservationId};
   const availaibility = { id: carId, availaibility: "availaible" };
   console.log("Cancelled reservation with ID:", reservationId);
   console.log(availaibility);
