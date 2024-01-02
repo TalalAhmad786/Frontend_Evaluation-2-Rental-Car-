@@ -58,7 +58,7 @@ Cancel a reservation.
 - Database: MongoDB
 # Getting Started
 
-1. - Clone the repository: git clone https://github.com/your-username/car-rental-frontend.git
+1. - Clone the repository: git clone https://github.com/TalalAhmad786/Rental-Car-Application-FrontEnd-.git
 2. - Install dependencies: npm install
 3. - Configure API endpoint in .env file.
 4. - Run the application: npm run serve
